@@ -1,0 +1,18 @@
+### Confirm Participant
+PATCH http://localhost:8080/participants/a46e348f-a3af-497a-a944-3bfd0647132f/confirm
+
+### Create Trip
+POST http://localhost:8080/trips
+Content-Type: application/json
+
+{
+  "destination": "França",
+  "starts_at": "2025-07-01T17:30:00Z",
+  "ends_at": "2025-07-21T17:30:00Z",
+  "emails_to_invite": [
+    "jaosilva1338@gmail.com",
+    "painkamirazer@gmail.com"
+  ],
+  "owner_name": "Victor",
+  "owner_email": "victor.almeida2410@gmail.com"
+}
