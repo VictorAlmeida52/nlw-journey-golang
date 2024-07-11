@@ -18,6 +18,11 @@ SET
     "is_confirmed" = $4
 WHERE id = $5;
 
+-- name: ConfirmTrip :exec
+UPDATE trips
+SET is_confirmed = true
+WHERE id = $1;
+
 -- name: GetParticipant :one
 SELECT id, trip_id, email, is_confirmed
 FROM participants
