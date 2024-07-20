@@ -1,21 +1,4 @@
 services:
-  db:
-    image: postgres:latest
-    restart: unless-stopped
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    ports:
-      - "${JOURNEY_DATABASE_PORT:-5432}:5432"
-    environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_DB: "journey"
-      POSTGRES_PASSWORD: "123456789"
-    volumes:
-      - db:/var/lib/postgresql/data
-
   pgadmin:
     image: dpage/pgadmin4:latest
     restart: unless-stopped
@@ -24,9 +7,6 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-password}
     ports:
       - 8081:80
-    depends_on:
-      db:
-        condition: service_healthy
     volumes:
       - pgadmin:/var/lib/pgadmin
 
@@ -41,9 +21,6 @@ services:
       JOURNEY_DATABASE_PORT: ${JOURNEY_DATABASE_PORT:-5432}
       JOURNEY_DATABASE_HOST: ${JOURNEY_DATABASE_HOST_DOCKER:-db}
       MAILPIT_HOST: ${MAILPIT_HOST}
-    depends_on:
-      db:
-        condition: service_healthy
 
   mailpit:
     image: axllent/mailpit:latest
@@ -59,8 +36,6 @@ services:
 
 volumes:
   mailpit:
-    driver: local
-  db:
     driver: local
   pgadmin:
     driver: local
