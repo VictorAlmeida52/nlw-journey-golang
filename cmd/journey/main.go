@@ -68,7 +68,7 @@ func run(ctx context.Context) error {
 
 	si := api.NewApi(pool, logger, mailpit.NewMailpit(pool))
 	r := chi.NewMux()
-	r.Use(middleware.RequestID, middleware.Recoverer, httputils.ChiLogger(logger))
+	r.Use(middleware.RequestID, middleware.Recoverer, middleware.Heartbeat("/healthcheck"), httputils.ChiLogger(logger))
 	r.Mount("/", spec.Handler(si))
 
 	srv := &http.Server{
